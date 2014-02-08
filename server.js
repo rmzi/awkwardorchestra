@@ -86,25 +86,25 @@ io.sockets.on('connection', function(socket) {
     socket.on('getOne', function(data){
         console.log("Player1 made: " + data)
         // Evaluate Player 1
-        socket.emit('getResult', {score: 42})
+        socket.emit('getResult1', {score: 1})
     })
 
     socket.on('getTwo', function(data){
-        console.log("Player1 made: " + data)
+        console.log("Player2 made: " + data)
         // Evaluate Player 2
-        socket.emit('getResult', {score: 42})
+        socket.emit('getResult2', {score: 2})
     })
 
     socket.on('getThree', function(data){
-        console.log("Player1 made: " + data)
+        console.log("Player3 made: " + data)
         // Evaluate Player 3
-        socket.emit('getResult', {score: 42})
+        socket.emit('getResult3', {score: 3})
     })
 
     socket.on('getFour', function(data){
-        console.log("Player1 made: " + data)
+        console.log("Player4 made: " + data)
         // Evaluate Player 4
-        socket.emit('getResult', {score: 42})
+        socket.emit('getResult4', {score: 4})
     })
 
     socket.on('sendResult', function(data){
