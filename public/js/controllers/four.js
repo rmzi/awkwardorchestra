@@ -392,12 +392,14 @@ angular.module('mean.system').controller('FourController', ['$scope', '$socket',
 		//Playback after the fact (integrate into the Angular files)
 		//var playback_on = false;
 		var playing = false;
+		var synth_redef = false;
 		var playback_osc;
 		var playback_env;
 		var playback_synth;
 		var playback_i = 0;
 		$("body").click(function() {
 			if (timer_done) { //should be playback_on
+				window.removeEventListener("deviceorientation", handle_orientation, false);
 				console.log("foo");
 				playback_osc = T("square");
 				playback_env = T("adsr", {a:10, d:100, s:1, r:500});
@@ -417,9 +419,18 @@ angular.module('mean.system').controller('FourController', ['$scope', '$socket',
 		});
 		var playback_timer = T("interval", {interval:500}, function(count) {
 				var velocity = 100;
+
+				if (typeof playback_osc == "undefined") {
+					playback_osc = T("square");
+					playback_env = T("adsr", {a:10, d:100, s:1, r:500});
+					playback_synth = T("OscGen", {osc:osc, env:env, mul:4, freq:880}).play();
+				}
+
 				
-				var note = note_arr[playback_i];
+				var note = note_arr[playback_i] + 12;
+				playback_synth.allNoteOff();
 				playback_synth.noteOn(note, velocity);
+				//synth.freq.value = midi_to_hz(note);
 				
 				console.log("asdf");
 
@@ -431,5 +442,6 @@ angular.module('mean.system').controller('FourController', ['$scope', '$socket',
 					console.log("reset");
 				}
 			});
+
 }; //end init()
 }]);
